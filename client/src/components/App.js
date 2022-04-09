@@ -7,7 +7,9 @@ const App = () => {
   const [walletInfo, setWalletInfo] = useState({});
 
   const loadWalletData = async () => {
-    const data = await fetch('http://localhost:3000/api/wallet-info');
+    const data = await fetch(
+      'https://mysterious-brushlands-14533.herokuapp.com/api/wallet-info'
+    );
     const response = await data.json();
 
     setWalletInfo({ address: response.address, balance: response.balance });
