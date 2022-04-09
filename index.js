@@ -25,7 +25,9 @@ const transactionMiner = new TransactionMiner({
 });
 
 const DEFAULT_PORT = 3000;
-const ROOT_NODE_ADDRESS = `http://localhost:${DEFAULT_PORT}`;
+const ROOT_NODE_ADDRESS = isDevelopment
+  ? `http://localhost:${DEFAULT_PORT}`
+  : `https://fathomless-forest-83827.herokuapp.com`;
 
 app.use(express.json()); // for parsing application/json
 app.use(express.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
