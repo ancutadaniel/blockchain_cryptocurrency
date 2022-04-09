@@ -29,6 +29,8 @@ const ROOT_NODE_ADDRESS = isDevelopment
   ? `http://localhost:${DEFAULT_PORT}`
   : `https://fathomless-forest-83827.herokuapp.com`;
 
+console.log(ROOT_NODE_ADDRESS);
+
 app.use(express.json()); // for parsing application/json
 app.use(express.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 app.use(express.static(path.join(__dirname, 'client/dist')));
