@@ -1064,7 +1064,7 @@ _reactDom.render(/*#__PURE__*/ _reactDefault.default.createElement(_reactRouterD
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react":"21dqq","react-dom":"j6uA9","react-router-dom":"fdOAw","./components/App":"ifYPa","./index.css":"b8ft2","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","./components/Blocks":"gec3j","./components/ConductTransaction":"8QY9t","./components/TransactionPool":"5ye4f"}],"21dqq":[function(require,module,exports) {
+},{"react":"21dqq","react-dom":"j6uA9","react-router-dom":"fdOAw","./components/App":"ifYPa","./components/Blocks":"gec3j","./components/ConductTransaction":"8QY9t","./components/TransactionPool":"5ye4f","./index.css":"b8ft2","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"21dqq":[function(require,module,exports) {
 'use strict';
 module.exports = require('./cjs/react.development.js');
 
@@ -23057,7 +23057,7 @@ $RefreshReg$(_c, "App");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react":"21dqq","./Blocks":"gec3j","../assets/logo.png":"hxQeD","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","react-router-dom":"fdOAw"}],"gec3j":[function(require,module,exports) {
+},{"react":"21dqq","react-router-dom":"fdOAw","./Blocks":"gec3j","../assets/logo.png":"hxQeD","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"gec3j":[function(require,module,exports) {
 var $parcel$ReactRefreshHelpers$e429 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 var prevRefreshReg = window.$RefreshReg$;
 var prevRefreshSig = window.$RefreshSig$;
@@ -23068,25 +23068,35 @@ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _react = require("react");
 var _reactDefault = parcelHelpers.interopDefault(_react);
+var _reactRouterDom = require("react-router-dom");
 var _block = require("../components/Block");
 var _blockDefault = parcelHelpers.interopDefault(_block);
-var _reactRouterDom = require("react-router-dom");
+var _reactBootstrap = require("react-bootstrap");
 var _s = $RefreshSig$();
 const Blocks = ()=>{
     _s();
     const [blocks, setBlocks] = _react.useState([]);
-    const loadBlocksData = async ()=>{
-        const data = await fetch('http://localhost:3000/api/blocks');
+    const [pageId1, setPageId] = _react.useState(1);
+    const [blocksLength, setBlocksLength] = _react.useState(0);
+    const fetchData = async ()=>{
+        const blocksDataLength = await fetch(`http://localhost:3000/api/blocks/length`);
+        const resBlocks = await blocksDataLength.json();
+        setBlocksLength(resBlocks);
+    };
+    const fetchPaginatedBlocks = async (pageId)=>{
+        setPageId(pageId);
+        const data = await fetch(`http://localhost:3000/api/blocks/${pageId}`);
         const response = await data.json();
         setBlocks(response);
     };
     _react.useEffect(()=>{
-        loadBlocksData();
+        fetchData();
+        fetchPaginatedBlocks(pageId1);
     }, []);
     return /*#__PURE__*/ _reactDefault.default.createElement("div", {
         __source: {
             fileName: "client/src/components/Blocks.js",
-            lineNumber: 20,
+            lineNumber: 32,
             columnNumber: 5
         },
         __self: undefined
@@ -23094,31 +23104,62 @@ const Blocks = ()=>{
         to: "/",
         __source: {
             fileName: "client/src/components/Blocks.js",
-            lineNumber: 21,
+            lineNumber: 33,
             columnNumber: 7
         },
         __self: undefined
     }, "Home"), /*#__PURE__*/ _reactDefault.default.createElement("h3", {
         __source: {
             fileName: "client/src/components/Blocks.js",
-            lineNumber: 22,
+            lineNumber: 34,
             columnNumber: 7
         },
         __self: undefined
-    }, "Blocks"), blocks.map((block, i)=>{
+    }, "Blocks"), /*#__PURE__*/ _reactDefault.default.createElement("div", {
+        __source: {
+            fileName: "client/src/components/Blocks.js",
+            lineNumber: 35,
+            columnNumber: 7
+        },
+        __self: undefined
+    }, [
+        ...Array(Math.ceil(blocksLength / 5)).keys()
+    ].map((key)=>{
+        const paginationId = key + 1;
+        return /*#__PURE__*/ _reactDefault.default.createElement("span", {
+            key: key,
+            __source: {
+                fileName: "client/src/components/Blocks.js",
+                lineNumber: 40,
+                columnNumber: 13
+            },
+            __self: undefined
+        }, /*#__PURE__*/ _reactDefault.default.createElement(_reactBootstrap.Button, {
+            variant: "primary",
+            size: "small",
+            onClick: ()=>fetchPaginatedBlocks(paginationId)
+            ,
+            __source: {
+                fileName: "client/src/components/Blocks.js",
+                lineNumber: 41,
+                columnNumber: 15
+            },
+            __self: undefined
+        }, paginationId), ' ');
+    })), blocks?.map((block, i)=>{
         return /*#__PURE__*/ _reactDefault.default.createElement(_blockDefault.default, {
             key: i,
             block: block,
             __source: {
                 fileName: "client/src/components/Blocks.js",
-                lineNumber: 24,
+                lineNumber: 53,
                 columnNumber: 16
             },
             __self: undefined
         });
     }));
 };
-_s(Blocks, "EnmQnMllSQUThE3/m+b9p1neh+g=");
+_s(Blocks, "bs2sUxt4qXiYMvq2pLUy2w16RaA=");
 _c = Blocks;
 exports.default = Blocks;
 var _c;
@@ -23129,7 +23170,7 @@ $RefreshReg$(_c, "Blocks");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react":"21dqq","../components/Block":"dvAge","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","react-router-dom":"fdOAw"}],"dvAge":[function(require,module,exports) {
+},{"react":"21dqq","react-router-dom":"fdOAw","../components/Block":"dvAge","react-bootstrap":"3AD9A","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"dvAge":[function(require,module,exports) {
 var $parcel$ReactRefreshHelpers$765c = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 var prevRefreshReg = window.$RefreshReg$;
 var prevRefreshSig = window.$RefreshSig$;
@@ -36421,7 +36462,7 @@ exports.getBundleURL = getBundleURLCached;
 exports.getBaseURL = getBaseURL;
 exports.getOrigin = getOrigin;
 
-},{}],"b8ft2":[function() {},{}],"8QY9t":[function(require,module,exports) {
+},{}],"8QY9t":[function(require,module,exports) {
 var $parcel$ReactRefreshHelpers$787b = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 var prevRefreshReg = window.$RefreshReg$;
 var prevRefreshSig = window.$RefreshSig$;
@@ -36439,7 +36480,16 @@ const ConductTransaction = ()=>{
     _s();
     const [recipient, setRecipient] = _react.useState('');
     const [amount, setAmount] = _react.useState(0);
+    const [knownAddresses, setKnownAddress] = _react.useState([]);
     let navigate = _reactRouterDom.useNavigate();
+    const fetchKnownAddresses = async ()=>{
+        const data = await fetch('http://localhost:3000/api/known-addresses');
+        const response = await data.json();
+        setKnownAddress(response);
+    };
+    _react.useEffect(()=>{
+        fetchKnownAddresses();
+    }, []);
     const handleRecipient = (e)=>{
         setRecipient(e.target.value);
     };
@@ -36465,7 +36515,7 @@ const ConductTransaction = ()=>{
         className: "ConductTransaction",
         __source: {
             fileName: "client/src/components/ConductTransaction.js",
-            lineNumber: 33,
+            lineNumber: 44,
             columnNumber: 5
         },
         __self: undefined
@@ -36473,21 +36523,52 @@ const ConductTransaction = ()=>{
         to: "/",
         __source: {
             fileName: "client/src/components/ConductTransaction.js",
-            lineNumber: 34,
+            lineNumber: 45,
             columnNumber: 7
         },
         __self: undefined
-    }, "Home"), /*#__PURE__*/ _reactDefault.default.createElement("div", {
+    }, "Home"), /*#__PURE__*/ _reactDefault.default.createElement("h4", {
         __source: {
             fileName: "client/src/components/ConductTransaction.js",
-            lineNumber: 35,
+            lineNumber: 46,
+            columnNumber: 7
+        },
+        __self: undefined
+    }, "Known Addresses"), knownAddresses.map((item, i)=>{
+        return /*#__PURE__*/ _reactDefault.default.createElement("div", {
+            key: i,
+            __source: {
+                fileName: "client/src/components/ConductTransaction.js",
+                lineNumber: 49,
+                columnNumber: 11
+            },
+            __self: undefined
+        }, /*#__PURE__*/ _reactDefault.default.createElement("div", {
+            __source: {
+                fileName: "client/src/components/ConductTransaction.js",
+                lineNumber: 50,
+                columnNumber: 13
+            },
+            __self: undefined
+        }, item), /*#__PURE__*/ _reactDefault.default.createElement("br", {
+            __source: {
+                fileName: "client/src/components/ConductTransaction.js",
+                lineNumber: 51,
+                columnNumber: 13
+            },
+            __self: undefined
+        }));
+    }), /*#__PURE__*/ _reactDefault.default.createElement("div", {
+        __source: {
+            fileName: "client/src/components/ConductTransaction.js",
+            lineNumber: 55,
             columnNumber: 7
         },
         __self: undefined
     }, /*#__PURE__*/ _reactDefault.default.createElement(_reactBootstrap.FormGroup, {
         __source: {
             fileName: "client/src/components/ConductTransaction.js",
-            lineNumber: 36,
+            lineNumber: 56,
             columnNumber: 9
         },
         __self: undefined
@@ -36498,21 +36579,21 @@ const ConductTransaction = ()=>{
         onChange: handleRecipient,
         __source: {
             fileName: "client/src/components/ConductTransaction.js",
-            lineNumber: 37,
+            lineNumber: 57,
             columnNumber: 11
         },
         __self: undefined
     }))), /*#__PURE__*/ _reactDefault.default.createElement("div", {
         __source: {
             fileName: "client/src/components/ConductTransaction.js",
-            lineNumber: 45,
+            lineNumber: 65,
             columnNumber: 7
         },
         __self: undefined
     }, /*#__PURE__*/ _reactDefault.default.createElement(_reactBootstrap.FormGroup, {
         __source: {
             fileName: "client/src/components/ConductTransaction.js",
-            lineNumber: 46,
+            lineNumber: 66,
             columnNumber: 9
         },
         __self: undefined
@@ -36523,7 +36604,7 @@ const ConductTransaction = ()=>{
         onChange: handleAmount,
         __source: {
             fileName: "client/src/components/ConductTransaction.js",
-            lineNumber: 47,
+            lineNumber: 67,
             columnNumber: 11
         },
         __self: undefined
@@ -36531,13 +36612,13 @@ const ConductTransaction = ()=>{
         onClick: conductTransaction,
         __source: {
             fileName: "client/src/components/ConductTransaction.js",
-            lineNumber: 55,
+            lineNumber: 75,
             columnNumber: 7
         },
         __self: undefined
     }, "Submit"));
 };
-_s(ConductTransaction, "zELp4lIvdIGr2L2U4O3mZft7/oA=", false, function() {
+_s(ConductTransaction, "O6xDBLXcbDf79L0d4/p9o4NMWJ4=", false, function() {
     return [
         _reactRouterDom.useNavigate
     ];
@@ -36664,6 +36745,6 @@ $RefreshReg$(_c, "TransactionPool");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react":"21dqq","react-router-dom":"fdOAw","./Transactions":"dQj2X","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","react-bootstrap":"3AD9A"}]},["kn9T2","8rmpt","iXgNX"], "iXgNX", "parcelRequire97db")
+},{"react":"21dqq","react-router-dom":"fdOAw","./Transactions":"dQj2X","react-bootstrap":"3AD9A","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"b8ft2":[function() {},{}]},["kn9T2","8rmpt","iXgNX"], "iXgNX", "parcelRequire97db")
 
 //# sourceMappingURL=index.764980e3.js.map

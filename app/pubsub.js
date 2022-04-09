@@ -1,9 +1,9 @@
 const PubNub = require('pubnub');
 
 const credentials = {
-  publishKey: `pub-c-c8b86454-f170-4cbb-8e4f-ac7bd7b9c77c`,
-  subscribeKey: `sub-c-a79e81ce-b502-11ec-8a86-d29fac035801`,
-  uuid: `sec-c-ZWNhYWQ1M2ItZTlhYy00MTBkLWJmODQtYTE3ZTVhNDY4ZjEz`,
+  publishKey: `pub-c-e177b5ea-9464-4c57-8331-0a0b4792073a`,
+  subscribeKey: `sub-c-e1f6d56c-b81b-11ec-ab24-d29fac035801`,
+  uuid: `sec-c-ZDdlNDM5ZjctNDE0Zi00MDYyLWI3OTctNDhjYzVkOTJmNzg5`,
 };
 
 const CHANNELS = {
